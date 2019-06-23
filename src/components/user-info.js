@@ -1,24 +1,34 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
-const UserInfo = () => (
+const UserInfo = ({ img, name, url, email, createdAt, updatedAt, repos, followers, following }) => (
   <div className='user-info'>
-    <img src='https://avatars0.githubusercontent.com/u/1?v=4' />
+    <img src={img} />
     <h1>
-      <a href='https://github.com/mojombo'>Tom Preston-Werner</a>
+      <a href={url}>{name}</a>
     </h1>
 
-    <p>Email: tom@gmail.com</p>
+    <p>Email: {email}</p>
 
-    <p>Entrou em: 21/05/2019 </p>
-    <p>Ultima interação em: 21/06/2019</p>
+    <p>Entrou em: {createdAt} </p>
+    <p>Ultima interação em: {updatedAt}</p>
 
     <ul className='repos-info'>
-      <li>Repositórios: 122</li>
-      <li>Seguidores: 21505</li>
-      <li>Seguindo: 11</li>
+      <li>Repositórios: {repos}</li>
+      <li>Seguidores: {followers}</li>
+      <li>Seguindo: {following}</li>
     </ul>
-
   </div>
 )
 
+UserInfo.PropTypes = {
+  img: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  createdAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired,
+  repos: PropTypes.number.isRequired,
+  followers: PropTypes.number.isRequired,
+  following: PropTypes.number.isRequired
+}
 export default UserInfo
