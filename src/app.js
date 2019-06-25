@@ -2,22 +2,13 @@
 
 import React, { Component } from 'react'
 import AppContent from './components/app-content'
+import axios from 'axios'
 
 class App extends Component {
   constructor () {
     super()
     this.state = {
-      userInfo: {
-        img: 'https://avatars0.githubusercontent.com/u/1?v=4',
-        name: 'Tom Preston-Werner',
-        url: 'https://api.github.com/users/mojombo',
-        email: 'tom@gmail.com',
-        createdAt: '2007-10-20T05:24:19Z',
-        updatedAt: '2007-10-20T05:24:19Z',
-        repos: 61,
-        followers: 21505,
-        following: 11
-      },
+      userInfo: null,
       repos: [{
         link: '#',
         name: 'nome do repositório'
@@ -26,6 +17,32 @@ class App extends Component {
         link: '#',
         name: 'nome do repositório'
       }]
+    }
+  }
+
+  handleSearch (e) {
+    const value = e.target.value
+    const keyCode = e.which || e.keyCode
+    const ENTER = 13
+
+    if (keyCode === ENTER) {
+      axios.get(`https://api.github.com/users/${value}`)
+        .then((response) => {
+          const { data } = response
+          this.setState({
+            userInfo: {
+              img: data.avatar_url,
+              name: data.name,
+              url: data.url,
+              email: data.email,
+              createdAt: data.created_at,
+              updatedAt: data.updated_at,
+              repos: data.public_repos,
+              followers: data.followers,
+              following: data.following
+            }
+          })
+        })
     }
   }
 
@@ -40,6 +57,7 @@ class App extends Component {
       userInfo={userInfo}
       repos={repos}
       starred={starred}
+      handleSearch={(e) => this.handleSearch(e)}
     />
   }
 }

@@ -31,4 +31,5 @@ UserInfo.PropTypes = {
   followers: PropTypes.number.isRequired,
   following: PropTypes.number.isRequired
 }
+
 export default UserInfo
