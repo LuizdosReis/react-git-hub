@@ -10,7 +10,8 @@ class App extends Component {
     this.state = {
       userInfo: null,
       repos: [],
-      starred: []
+      starred: [],
+      searchDisable: false
     }
   }
 
@@ -20,11 +21,13 @@ class App extends Component {
   }
 
   handleSearch (e) {
-    const value = e.target.value
+    const { target } = e
+    const { value } = target
     const keyCode = e.which || e.keyCode
     const ENTER = 13
 
     if (keyCode === ENTER) {
+      this.setState({ searchDisable: true })
       axios.get(this.getUrlGit(value))
         .then((response) => {
           const { data } = response
@@ -44,6 +47,9 @@ class App extends Component {
             repos: [],
             starred: []
           })
+        })
+        .finally(() => {
+          this.setState({ searchDisable: false })
         })
     }
   }
@@ -69,7 +75,8 @@ class App extends Component {
     const {
       userInfo,
       repos,
-      starred
+      starred,
+      searchDisable
     } = this.state
 
     return <AppContent
@@ -79,6 +86,7 @@ class App extends Component {
       handleSearch={(e) => this.handleSearch(e)}
       getRepos={() => this.getRepos('repos')}
       getStarred={() => this.getRepos('starred')}
+      searchDisable={searchDisable}
     />
   }
 }
