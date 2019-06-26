@@ -14,13 +14,18 @@ class App extends Component {
     }
   }
 
+  getUrlGit (username, type) {
+    const internalType = type ? `/${type}` : ''
+    return `https://api.github.com/users/${username}${internalType}`
+  }
+
   handleSearch (e) {
     const value = e.target.value
     const keyCode = e.which || e.keyCode
     const ENTER = 13
 
     if (keyCode === ENTER) {
-      axios.get(`https://api.github.com/users/${value}`)
+      axios.get(this.getUrlGit(value))
         .then((response) => {
           const { data } = response
           this.setState({
@@ -46,7 +51,7 @@ class App extends Component {
   getRepos (type) {
     const { username } = this.state.userInfo
 
-    axios.get(`https://api.github.com/users/${username}/${type}`)
+    axios.get(this.getUrlGit(username, type))
       .then((response) => {
         const { data } = response
 
