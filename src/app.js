@@ -9,14 +9,8 @@ class App extends Component {
     super()
     this.state = {
       userInfo: null,
-      repos: [{
-        link: '#',
-        name: 'nome do repositório'
-      }],
-      starred: [{
-        link: '#',
-        name: 'nome do repositório'
-      }]
+      repos: [],
+      starred: []
     }
   }
 
@@ -31,6 +25,7 @@ class App extends Component {
           const { data } = response
           this.setState({
             userInfo: {
+              username: data.login,
               img: data.avatar_url,
               name: data.name,
               url: data.url,
@@ -46,6 +41,23 @@ class App extends Component {
     }
   }
 
+  getRepos (type) {
+    const { username } = this.state.userInfo
+
+    axios.get(`https://api.github.com/users/${username}/${type}`)
+      .then((response) => {
+        const { data } = response
+
+        const repos = data.map(repo => ({
+          key: repo.id,
+          link: repo.html_url,
+          name: repo.name
+        }))
+
+        this.setState({ [type]: repos })
+      })
+  }
+
   render () {
     const {
       userInfo,
@@ -58,6 +70,8 @@ class App extends Component {
       repos={repos}
       starred={starred}
       handleSearch={(e) => this.handleSearch(e)}
+      getRepos={() => this.getRepos('repos')}
+      getStarred={() => this.getRepos('starred')}
     />
   }
 }
