@@ -11,7 +11,7 @@ class App extends Component {
       userInfo: null,
       repos: [],
       starred: [],
-      searchDisable: false
+      isFetching: false
     }
   }
 
@@ -27,7 +27,7 @@ class App extends Component {
     const ENTER = 13
 
     if (keyCode === ENTER) {
-      this.setState({ searchDisable: true })
+      this.setState({ isFetching: true })
       axios.get(this.getUrlGit(value))
         .then((response) => {
           const { data } = response
@@ -49,7 +49,7 @@ class App extends Component {
           })
         })
         .finally(() => {
-          this.setState({ searchDisable: false })
+          this.setState({ isFetching: false })
         })
     }
   }
@@ -76,7 +76,7 @@ class App extends Component {
       userInfo,
       repos,
       starred,
-      searchDisable
+      isFetching
     } = this.state
 
     return <AppContent
@@ -86,7 +86,7 @@ class App extends Component {
       handleSearch={(e) => this.handleSearch(e)}
       getRepos={() => this.getRepos('repos')}
       getStarred={() => this.getRepos('starred')}
-      searchDisable={searchDisable}
+      isFetching={isFetching}
     />
   }
 }

@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-const Search = ({ handleSearch, searchDisable }) => (
+const Search = ({ handleSearch, isDisabled }) => (
   <div className='search'>
     <input
-      disabled={searchDisable}
+      disabled={isDisabled}
       type='search'
       placeholder='Digite o nome do usuario no GitHub'
       onKeyUp={handleSearch}
@@ -13,7 +13,7 @@ const Search = ({ handleSearch, searchDisable }) => (
 
 Search.propTypes = {
   handleSearch: PropTypes.func.isRequired,
-  searchDisable: PropTypes.bool.isRequired
+  isDisabled: PropTypes.bool.isRequired
 }
 
 export default Search
