@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './search.css';
 
 const Search = ({ handleSearch, isDisabled }) => (
   <div className="search">
