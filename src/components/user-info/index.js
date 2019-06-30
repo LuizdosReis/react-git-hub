@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './user-info.css';
 
 const UserInfo = ({
   img,

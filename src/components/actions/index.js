@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './actions.css';
 
 const Actions = ({ getRepos, getStarred }) => (
   <div className="action">

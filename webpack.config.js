@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const webpack = require('webpack');
 const validate = require('webpack-validator');
@@ -37,6 +35,12 @@ module.exports = validate({
         exclude: /node_modules/,
         include: /src/,
         loader: 'babel',
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        include: /src/,
+        loaders: ['style', 'css'],
       },
     ],
   },

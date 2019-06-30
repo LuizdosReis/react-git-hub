@@ -76,19 +76,12 @@ class App extends Component {
   }
 
   render() {
-    const {
-      userInfo, repos, starred, isFetching,
-    } = this.state;
-
     return (
       <AppContent
-        userInfo={userInfo}
-        repos={repos}
-        starred={starred}
+        {...this.state}
         handleSearch={this.handleSearch}
         getRepos={this.getRepos('repos')}
         getStarred={this.getRepos('starred')}
-        isFetching={isFetching}
       />
     );
   }
