@@ -45,14 +45,14 @@ AppContent.propTypes = {
   }),
   repos: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      key: PropTypes.number.isRequired,
       link: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
   ).isRequired,
   starred: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      key: PropTypes.number.isRequired,
       link: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),

@@ -23,7 +23,7 @@ Repos.propTypes = {
   title: PropTypes.string.isRequired,
   repos: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      key: PropTypes.number.isRequired,
       link: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
