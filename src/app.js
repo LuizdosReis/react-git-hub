@@ -15,7 +15,6 @@ class App extends Component {
     };
 
     this.handleSearch = this.handleSearch.bind(this);
-    this.getRepos = this.getRepos.bind(this);
   }
 
   static getUrlGit(username, type) {
@@ -24,19 +23,21 @@ class App extends Component {
   }
 
   getRepos(type) {
-    const { userInfo } = this.state;
+    return () => {
+      const { userInfo } = this.state;
 
-    axios.get(App.getUrlGit(userInfo.username, type)).then((response) => {
-      const { data } = response;
+      axios.get(App.getUrlGit(userInfo.username, type)).then((response) => {
+        const { data } = response;
 
-      const repos = data.map(repo => ({
-        key: repo.id,
-        link: repo.html_url,
-        name: repo.name,
-      }));
+        const repos = data.map(repo => ({
+          key: repo.id,
+          link: repo.html_url,
+          name: repo.name,
+        }));
 
-      this.setState({ [type]: repos });
-    });
+        this.setState({ [type]: repos });
+      });
+    };
   }
 
   handleSearch(e) {
@@ -85,8 +86,8 @@ class App extends Component {
         repos={repos}
         starred={starred}
         handleSearch={this.handleSearch}
-        getRepos={this.getRepos}
-        getStarred={this.getRepos}
+        getRepos={this.getRepos('repos')}
+        getStarred={this.getRepos('starred')}
         isFetching={isFetching}
       />
     );
