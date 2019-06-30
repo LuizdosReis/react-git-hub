@@ -13,6 +13,9 @@ class App extends Component {
       starred: [],
       isFetching: false,
     };
+
+    this.handleSearch = this.handleSearch.bind(this);
+    this.getRepos = this.getRepos.bind(this);
   }
 
   static getUrlGit(username, type) {
@@ -81,9 +84,9 @@ class App extends Component {
         userInfo={userInfo}
         repos={repos}
         starred={starred}
-        handleSearch={e => this.handleSearch(e)}
-        getRepos={() => this.getRepos('repos')}
-        getStarred={() => this.getRepos('starred')}
+        handleSearch={this.handleSearch}
+        getRepos={this.getRepos}
+        getStarred={this.getRepos}
         isFetching={isFetching}
       />
     );
