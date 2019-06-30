@@ -1,42 +1,66 @@
-import React, { PropTypes } from 'react'
-import Search from './search'
-import UserInfo from './user-info'
-import Actions from './actions'
-import Repos from './repos'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const AppContent = ({ userInfo, repos, starred, handleSearch, getRepos, getStarred, isFetching }) => (
-  <div className='app'>
+import Search from './search';
+import UserInfo from './user-info';
+import Actions from './actions';
+import Repos from './repos';
+
+const AppContent = ({
+  userInfo,
+  repos,
+  starred,
+  handleSearch,
+  getRepos,
+  getStarred,
+  isFetching,
+}) => (
+  <div className="app">
     <Search handleSearch={handleSearch} isDisabled={isFetching} />
     {isFetching && <div>Carregando...</div>}
     {!!userInfo && <UserInfo {...userInfo} />}
     {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
 
-    {!!repos.length &&
-      <Repos
-        className='repos'
-        title='Repositórios'
-        repos={repos}
-      />
-    }
+    {!!repos.length && <Repos className="repos" title="Repositórios" repos={repos} />}
 
-    {!!starred.length &&
-      <Repos
-        className='starred'
-        title='Favoritos'
-        repos={starred}
-      />
-    }
+    {!!starred.length && <Repos className="starred" title="Favoritos" repos={starred} />}
   </div>
-)
+);
+
+AppContent.defaultProps = {
+  userInfo: null,
+};
 
 AppContent.propTypes = {
-  userInfo: PropTypes.object,
-  repos: PropTypes.array.isRequired,
-  starred: PropTypes.array.isRequired,
+  userInfo: PropTypes.shape({
+    img: PropTypes.string,
+    username: PropTypes.string,
+    url: PropTypes.string,
+    email: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+    repos: PropTypes.number,
+    followers: PropTypes.number,
+    following: PropTypes.number,
+  }),
+  repos: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  starred: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   handleSearch: PropTypes.func.isRequired,
   getRepos: PropTypes.func.isRequired,
   getStarred: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
-}
+  isFetching: PropTypes.bool.isRequired,
+};
 
-export default AppContent
+export default AppContent;

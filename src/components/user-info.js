@@ -1,26 +1,60 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const UserInfo = ({ img, name, url, email, createdAt, updatedAt, repos, followers, following }) => (
-  <div className='user-info'>
-    <img src={img} />
+const UserInfo = ({
+  img,
+  username,
+  url,
+  email,
+  createdAt,
+  updatedAt,
+  repos,
+  followers,
+  following,
+}) => (
+  <div className="user-info">
+    <img src={img} alt="img of user" />
     <h1>
-      <a href={url}>{name}</a>
+      <a href={url}>{username}</a>
     </h1>
 
-    <p>Email: {email}</p>
+    <p>
+      Email:
+      {email}
+    </p>
 
-    <p>Entrou em: {createdAt} </p>
-    <p>Ultima interação em: {updatedAt}</p>
+    <p>
+      Entrou em:
+      {createdAt}
+      {' '}
+    </p>
+    <p>
+      Ultima interação em:
+      {updatedAt}
+    </p>
 
-    <ul className='repos-info'>
-      <li>Repositórios: {repos}</li>
-      <li>Seguidores: {followers}</li>
-      <li>Seguindo: {following}</li>
+    <ul className="repos-info">
+      <li>
+        Repositórios:
+        {repos}
+      </li>
+      <li>
+        Seguidores:
+        {followers}
+      </li>
+      <li>
+        Seguindo:
+        {following}
+      </li>
     </ul>
   </div>
-)
+);
 
-UserInfo.PropTypes = {
+UserInfo.defaultProps = {
+  email: '',
+};
+
+UserInfo.propTypes = {
   img: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
@@ -29,7 +63,7 @@ UserInfo.PropTypes = {
   updatedAt: PropTypes.string.isRequired,
   repos: PropTypes.number.isRequired,
   followers: PropTypes.number.isRequired,
-  following: PropTypes.number.isRequired
-}
+  following: PropTypes.number.isRequired,
+};
 
-export default UserInfo
+export default UserInfo;

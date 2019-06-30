@@ -1,28 +1,33 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Repos = ({ className, title, repos }) => (
   <div className={className}>
     <h2>{title}</h2>
     <ul>
-      {
-        repos.map(repo => (
-          <li key={repo.key}>
-            <a href={repo.link}>{repo.name}</a>
-          </li>
-        ))
-      }
+      {repos.map(repo => (
+        <li key={repo.key}>
+          <a href={repo.link}>{repo.name}</a>
+        </li>
+      ))}
     </ul>
   </div>
-)
+);
 
 Repos.defaultProps = {
-  className: ''
-}
+  className: '',
+};
 
 Repos.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
-  repos: PropTypes.array
-}
+  repos: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
-export default Repos
+export default Repos;
