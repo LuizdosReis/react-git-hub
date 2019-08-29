@@ -4,9 +4,10 @@ const validate = require('webpack-validator');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = validate({
-  devtool: 'source-map',
+const crp = new ExtractTextPlugin('crp.css');
+const styles = new ExtractTextPlugin('[name]-[hash].css');
 
+module.exports = validate({
   entry: path.join(__dirname, 'src', 'index'),
 
   output: {
@@ -15,7 +16,8 @@ module.exports = validate({
   },
 
   plugins: [
-    new ExtractTextPlugin('[name]-[hash].css'),
+    crp,
+    styles,
 
     new webpack.DefinePlugin({
       'process.env': {
@@ -32,6 +34,7 @@ module.exports = validate({
 
     new HtmlPlugin({
       title: 'Github app',
+      inject: false,
       template: path.join(__dirname, 'src', 'html', 'template.html'),
     }),
   ],
@@ -54,9 +57,15 @@ module.exports = validate({
       },
       {
         test: /\.css$/,
+        exclude: /node_modules|(search|style)\.css/,
+        include: /src/,
+        loader: styles.extract('style', 'css'),
+      },
+      {
+        test: /(search|style)\.css$/,
         exclude: /node_modules/,
         include: /src/,
-        loader: ExtractTextPlugin.extract('style', 'css'),
+        loader: crp.extract('style', 'css'),
       },
     ],
   },
