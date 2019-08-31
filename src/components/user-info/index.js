@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from './user-info.css';
+import './user-info.css';
 
 const UserInfo = ({
   img,
@@ -13,7 +13,7 @@ const UserInfo = ({
   followers,
   following,
 }) => (
-  <div className={style.userInfo}>
+  <div className="user-info">
     <img src={img} alt="img of user" />
     <h1>
       <a href={url}>{username}</a>
@@ -34,7 +34,7 @@ const UserInfo = ({
       {updatedAt}
     </p>
 
-    <ul className={style.reposInfo}>
+    <ul className="repos-info">
       <li>
         Repositórios:
         {repos}

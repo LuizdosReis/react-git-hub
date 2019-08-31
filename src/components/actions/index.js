@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from './actions.css';
+import './actions.css';
 
 const Actions = ({ getRepos, getStarred }) => (
-  <div className={style.actions}>
+  <div className="action">
     <button type="button" onClick={getRepos}>
       Ver Repositórios
     </button>

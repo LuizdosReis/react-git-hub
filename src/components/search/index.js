@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from './search.css';
+import './search.css';
 
 const Search = ({ handleSearch, isDisabled }) => (
-  <div className={style.search}>
+  <div className="search">
     <input
       disabled={isDisabled}
       type="search"

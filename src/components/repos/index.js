@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from './repos.css';
+import './repos.css';
 
 const Repos = ({ className, title, repos }) => (
-  <div className={`${style.reposList} ${className}`}>
+  <div className={className}>
     <h2>{title}</h2>
     <ul>
       {repos.map(repo => (

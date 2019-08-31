@@ -1,9 +1,9 @@
-.userInfo img {
+.user-info img {
   float: left;
   margin: 0 20px 20px 0;
   max-height: 210px;
 }
 
-.reposInfo li {
+.repos-info li {
   padding: 5px;
 }

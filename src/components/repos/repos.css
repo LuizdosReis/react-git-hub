@@ -1,7 +1,7 @@
-.reposList li {
+.repos-list li {
   padding: 10px 0;
 }
 
-.reposList li + li {
+.repos-list li + li {
   border-top: 1px solid #ccc;
 }
