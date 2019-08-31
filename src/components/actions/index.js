@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './actions.css';
 
 const Actions = ({ getRepos, getStarred }) => (
-  <div className="action">
+  <div className="actions">
     <button type="button" onClick={getRepos}>
       Ver Repositórios
     </button>
