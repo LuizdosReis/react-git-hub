@@ -17,6 +17,7 @@ const Repos = ({ className, title, repos }) => (
 
 Repos.defaultProps = {
   className: '',
+  repos: [],
 };
 
 Repos.propTypes = {
@@ -28,7 +29,7 @@ Repos.propTypes = {
       link: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
-  ).isRequired,
+  ),
 };
 
 export default Repos;
