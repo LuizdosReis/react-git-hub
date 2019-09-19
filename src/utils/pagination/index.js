@@ -10,7 +10,17 @@ const centerRuler = ({ total, activePage }) => {
   return activePage - 1;
 };
 
-export default ({ total, activePage }) => {
+const isNumber = value => typeof value === 'number';
+
+export default ({ total = 1, activePage = 1 } = {}) => {
+  if (!isNumber(total)) {
+    throw new TypeError('total should be a number');
+  }
+
+  if (!isNumber(activePage)) {
+    throw new TypeError('activePage should be a number');
+  }
+
   if (total <= 5) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
@@ -22,15 +32,13 @@ export default ({ total, activePage }) => {
     total,
   ].filter((value, index, array) => array.indexOf(value) === index);
 
-  let firstPage = pages[0];
-  let secondPage = pages[1];
+  let [firstPage, secondPage] = pages;
 
   if (secondPage === firstPage + 2) {
     pages = [firstPage, firstPage + 1, ...pages.slice(1)];
   }
 
-  firstPage = pages[0];
-  secondPage = pages[1];
+  [firstPage, secondPage] = pages;
 
   if (secondPage > firstPage + 2) {
     pages = [firstPage, '...', ...pages.slice(1)];
