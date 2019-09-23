@@ -60,6 +60,7 @@ module.exports = validate({
     alias: {
       src: path.join(__dirname, 'src'),
       components: path.join(__dirname, 'src', 'components'),
+      utils: path.join(__dirname, 'src', 'utils'),
     },
   },
 });

@@ -25,7 +25,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      alias: [['src', './src'], ['components', './src/components']],
+      alias: [['src', './src'], ['components', './src/components'], ['utils', './src/utils']],
     },
   },
 };
