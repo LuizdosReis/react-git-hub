@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "webpack-dashboard -- node server.js",
-    "build": "cross-env NODE_END=production webpack --progress --config webpack.prod.config -p",
+    "build": "cross-env NODE_END=production webpack --progress --config webpack/prod.config -p",
     "test": "jest --coverage",
     "test:watch": "yarn test -- --watch",
     "lint": "eslint './src/**/*.js'",

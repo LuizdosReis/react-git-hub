@@ -4,16 +4,14 @@ const validate = require('webpack-validator');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const common = require('./common');
+
 const crp = new ExtractTextPlugin('crp.css');
 const styles = new ExtractTextPlugin('[name]-[hash].css');
 
 module.exports = validate({
-  entry: path.join(__dirname, 'src', 'index'),
-
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name]-[hash].js',
-  },
+  entry: common.entry,
+  output: common.output,
 
   plugins: [
     crp,
@@ -32,29 +30,13 @@ module.exports = validate({
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
 
-    new HtmlPlugin({
-      title: 'Github app',
-      inject: false,
-      template: path.join(__dirname, 'src', 'html', 'template.html'),
-    }),
+    new HtmlPlugin(common.htmlPluginConfig('template.html')),
   ],
 
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        include: /src/,
-        loader: 'eslint-loader',
-      },
-    ],
+    preLoaders: [common.standardPreLoader],
     loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        include: /src/,
-        loader: 'babel',
-      },
+      common.jsLoaders,
       {
         test: /\.css$/,
         exclude: /node_modules|(search|style)\.css/,
@@ -70,11 +52,5 @@ module.exports = validate({
     ],
   },
 
-  resolve: {
-    alias: {
-      src: path.join(__dirname, 'src'),
-      components: path.join(__dirname, 'src', 'components'),
-      utils: path.join(__dirname, 'src', 'utils'),
-    },
-  },
+  resolve: common.resolve,
 });
