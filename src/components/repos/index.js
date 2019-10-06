@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import './repos.css';
 
 const Repos = ({ className, title, repos }) => (
-  <div className={className}>
+  <div className={`repos-list-container ${className}`}>
     <h2>{title}</h2>
-    <ul>
+    <ul className="repos-list">
       {repos.map(repo => (
         <li key={repo.key}>
           <a href={repo.link}>{repo.name}</a>
