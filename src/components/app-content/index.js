@@ -15,6 +15,7 @@ const AppContent = ({
   getRepos,
   getStarred,
   isFetching,
+  handlePagination,
 }) => (
   <div className="app">
     <Search handleSearch={handleSearch} isDisabled={isFetching} />
@@ -23,15 +24,34 @@ const AppContent = ({
     {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
 
     <div className="repos-container">
-      {!!repos.length && <Repos className="repos" title="Repositórios" repos={repos} />}
+      {!!repos.repos.length && (
+        <Repos
+          className="repos"
+          title="Repositórios"
+          repos={repos}
+          handlePagination={clicked => handlePagination('repos', clicked)}
+        />
+      )}
 
-      {!!starred.length && <Repos className="starred" title="Favoritos" repos={starred} />}
+      {!!starred.repos.length && (
+        <Repos
+          className="starred"
+          title="Favoritos"
+          repos={starred}
+          handlePagination={clicked => handlePagination('starred', clicked)}
+        />
+      )}
     </div>
   </div>
 );
 
 AppContent.defaultProps = {
   userInfo: null,
+};
+
+const reposPropTypesShape = {
+  repos: PropTypes.array.isRequired,
+  pagination: PropTypes.object,
 };
 
 AppContent.propTypes = {
@@ -46,24 +66,13 @@ AppContent.propTypes = {
     followers: PropTypes.number,
     following: PropTypes.number,
   }),
-  repos: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.number.isRequired,
-      link: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  starred: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.number.isRequired,
-      link: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  repos: PropTypes.shape(reposPropTypesShape).isRequired,
+  starred: PropTypes.shape(reposPropTypesShape).isRequired,
   handleSearch: PropTypes.func.isRequired,
   getRepos: PropTypes.func.isRequired,
   getStarred: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  handlePagination: PropTypes.func.isRequired,
 };
 
 export default AppContent;

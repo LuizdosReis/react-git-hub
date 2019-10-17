@@ -9,25 +9,49 @@ class App extends Component {
     super();
     this.state = {
       userInfo: null,
-      repos: [],
-      starred: [],
+      repos: {
+        repos: [],
+        pagination: {
+          total: 1,
+          activePage: 1,
+        },
+      },
+      starred: {
+        repos: [],
+        pagination: {
+          total: 1,
+          activePage: 1,
+        },
+      },
       isFetching: false,
+      perPage: 3,
     };
-
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  static getUrlGit(username, type) {
+  static getUrlGit(username, type, perPage, page) {
     const internalType = type ? `/${type}` : '';
-    return `https://api.github.com/users/${username}${internalType}`;
+    return `https://api.github.com/users/${username}${internalType}?per_page=${perPage}&page=${page}`;
   }
 
-  getRepos(type) {
-    return () => {
-      const { userInfo } = this.state;
+  getTotalPage(headers, type) {
+    const { link } = headers;
 
-      axios.get(App.getUrlGit(userInfo.username, type)).then((response) => {
-        const { data } = response;
+    const totalpagesMatch = link.match(/&page=(\d+)>; rel="last/);
+
+    const { [type]: repo } = this.state;
+
+    return totalpagesMatch ? +totalpagesMatch[1] : repo.pagination.total;
+  }
+
+  getRepos(type, page = 1) {
+    return () => {
+      const { userInfo, perPage } = this.state;
+
+      axios.get(App.getUrlGit(userInfo.username, type, perPage, page)).then((response) => {
+        const { data, headers } = response;
+
+        const total = this.getTotalPage(headers, type);
 
         const repos = data.map(repo => ({
           key: repo.id,
@@ -35,7 +59,7 @@ class App extends Component {
           name: repo.name,
         }));
 
-        this.setState({ [type]: repos });
+        this.setState({ [type]: { repos, pagination: { activePage: page, total } } });
       });
     };
   }
@@ -65,8 +89,6 @@ class App extends Component {
               followers: data.followers,
               following: data.following,
             },
-            repos: [],
-            starred: [],
           });
         })
         .finally(() => {
@@ -82,6 +104,7 @@ class App extends Component {
         handleSearch={this.handleSearch}
         getRepos={this.getRepos('repos')}
         getStarred={this.getRepos('starred')}
+        handlePagination={(type, page) => this.getRepos(type, page)()}
       />
     );
   }
