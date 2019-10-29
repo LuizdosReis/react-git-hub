@@ -20,7 +20,19 @@ const AppContent = ({
   <div className="app">
     <Search handleSearch={handleSearch} isDisabled={isFetching} />
     {isFetching && <div>Carregando...</div>}
-    {!!userInfo && <UserInfo {...userInfo} />}
+    {!!userInfo && (
+      <UserInfo
+        img={userInfo.img}
+        username={userInfo.username}
+        url={userInfo.url}
+        email={userInfo.email}
+        createdAt={userInfo.createdAt}
+        updatedAt={userInfo.updatedAt}
+        repos={userInfo.repos}
+        followers={userInfo.followers}
+        following={userInfo.following}
+      />
+    )}
     {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
     <div className="repos-container">
       {!!repos.repos.length && (
