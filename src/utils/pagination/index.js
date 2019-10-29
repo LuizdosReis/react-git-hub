@@ -10,7 +10,7 @@ const centerRuler = ({ total, activePage }) => {
   return activePage - 1;
 };
 
-const isNumber = value => typeof value === 'number';
+const isNumber = (value) => typeof value === 'number';
 
 export default ({ total = 1, activePage = 1 } = {}) => {
   if (!isNumber(total)) {

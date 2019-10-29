@@ -11,7 +11,7 @@ const Repos = ({
   <div className={`repos-list-container ${className}`}>
     <h2>{title}</h2>
     <ul className="repos-list">
-      {repos.repos.map(repo => (
+      {repos.repos.map((repo) => (
         <li key={repo.key}>
           <a href={repo.link}>{repo.name}</a>
         </li>
@@ -27,6 +27,7 @@ const Repos = ({
 );
 
 Repos.defaultProps = {
+  // eslint-disable-next-line react/jsx-props-no-spreading
   className: '',
 };
 

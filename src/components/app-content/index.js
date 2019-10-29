@@ -22,14 +22,13 @@ const AppContent = ({
     {isFetching && <div>Carregando...</div>}
     {!!userInfo && <UserInfo {...userInfo} />}
     {!!userInfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
-
     <div className="repos-container">
       {!!repos.repos.length && (
         <Repos
           className="repos"
           title="Repositórios"
           repos={repos}
-          handlePagination={clicked => handlePagination('repos', clicked)}
+          handlePagination={(clicked) => handlePagination('repos', clicked)}
         />
       )}
 
@@ -38,7 +37,7 @@ const AppContent = ({
           className="starred"
           title="Favoritos"
           repos={starred}
-          handlePagination={clicked => handlePagination('starred', clicked)}
+          handlePagination={(clicked) => handlePagination('starred', clicked)}
         />
       )}
     </div>

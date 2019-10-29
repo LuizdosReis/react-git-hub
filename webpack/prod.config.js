@@ -1,15 +1,15 @@
-const path = require('path');
 const webpack = require('webpack');
-const validate = require('webpack-validator');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const common = require('./common');
 
-const crp = new ExtractTextPlugin('crp.css');
-const styles = new ExtractTextPlugin('[name]-[hash].css');
+const crp = new ExtractTextPlugin({ filename: 'crp.css' });
+const styles = new ExtractTextPlugin({
+  filename: '[name]-[hash].css',
+});
 
-module.exports = validate({
+module.exports = {
   entry: common.entry,
   output: common.output,
 
@@ -24,33 +24,30 @@ module.exports = validate({
     }),
 
     new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
+      sourceMap: true,
     }),
-
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
 
     new HtmlPlugin(common.htmlPluginConfig('template.html')),
   ],
 
   module: {
-    preLoaders: [common.standardPreLoader],
-    loaders: [
+    rules: [
+      common.standardPreLoader,
       common.jsLoaders,
       {
         test: /\.css$/,
         exclude: /node_modules|(search|style)\.css/,
         include: /src/,
-        loader: styles.extract('style', 'css'),
+        use: styles.extract('style', 'css'),
       },
       {
         test: /(search|style)\.css$/,
         exclude: /node_modules/,
         include: /src/,
-        loader: crp.extract('style', 'css'),
+        use: crp.extract('style', 'css'),
       },
     ],
   },
 
   resolve: common.resolve,
-});
+};

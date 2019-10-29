@@ -53,7 +53,7 @@ class App extends Component {
 
         const total = this.getTotalPage(headers, type);
 
-        const repos = data.map(repo => ({
+        const repos = data.map((repo) => ({
           key: repo.id,
           link: repo.html_url,
           name: repo.name,
