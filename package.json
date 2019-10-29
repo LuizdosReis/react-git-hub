@@ -8,7 +8,8 @@
     "lint:fix": "yarn lint -- --fix",
     "lint:watch": "esw -w './src/**/*.js'",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "update-packages": "node scripts/update.js"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
