@@ -29,6 +29,13 @@ const Repos = ({
 Repos.defaultProps = {
   // eslint-disable-next-line react/jsx-props-no-spreading
   className: '',
+  repos: {
+    repos: [],
+    pagination: {
+      total: 0,
+      activePage: 0,
+    },
+  },
 };
 
 Repos.propTypes = {
@@ -43,10 +50,10 @@ Repos.propTypes = {
       }),
     ),
     pagination: PropTypes.shape({
-      total: PropTypes.number.isRequired,
-      activePage: PropTypes.number.isRequired,
+      total: PropTypes.number,
+      activePage: PropTypes.number,
     }),
-  }).isRequired,
+  }),
   handlePagination: PropTypes.func.isRequired,
 };
 
