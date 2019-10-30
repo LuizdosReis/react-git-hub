@@ -15,9 +15,7 @@ module.exports = {
     common.entry,
   ],
 
-  output: Object.assign({}, common.output, {
-    publicPath: '/',
-  }),
+  output: { ...common.output, publicPath: '/' },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
