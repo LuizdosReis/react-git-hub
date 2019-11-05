@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const common = require('./common');
 
@@ -9,6 +10,8 @@ module.exports = {
   output: common.output,
 
   plugins: [
+    new CleanWebpackPlugin(),
+    new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: 'production',
@@ -20,7 +23,6 @@ module.exports = {
     }),
 
     new HtmlPlugin(common.htmlPluginConfig('template-dev.html')),
-    new ExtractTextPlugin('[name]-[hash].css'),
   ],
 
   module: {
