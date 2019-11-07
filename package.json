@@ -39,7 +39,7 @@
     "style-loader": "^1.0.0",
     "webpack": "^2.2.1",
     "webpack-dashboard": "^0.3.0",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^3.1.11"
   },
   "dependencies": {
     "@kadira/storybook": "^2.35.3",
