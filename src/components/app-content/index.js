@@ -16,10 +16,12 @@ const AppContent = ({
   getStarred,
   isFetching,
   handlePagination,
+  error,
 }) => (
   <div className="app">
     <Search handleSearch={handleSearch} isDisabled={isFetching} />
     {isFetching && <div>Carregando...</div>}
+    {!!error && <div>{error}</div>}
     {!!userInfo && (
       <UserInfo
         img={userInfo.img}
@@ -84,6 +86,7 @@ AppContent.propTypes = {
   getStarred: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   handlePagination: PropTypes.func.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 export default AppContent;

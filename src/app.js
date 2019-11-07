@@ -24,6 +24,7 @@ class App extends Component {
         },
       },
       isFetching: false,
+      error: '',
       perPage: 3,
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -45,26 +46,26 @@ class App extends Component {
   }
 
   getRepos(type, page = 1) {
-    return () => {
+    return async () => {
       const { userInfo, perPage } = this.state;
 
-      axios.get(App.getUrlGit(userInfo.username, type, perPage, page)).then((response) => {
-        const { data, headers } = response;
+      const response = await axios.get(App.getUrlGit(userInfo.username, type, perPage, page));
 
-        const total = this.getTotalPage(headers, type);
+      const { data, headers } = response;
 
-        const repos = data.map((repo) => ({
-          key: repo.id,
-          link: repo.html_url,
-          name: repo.name,
-        }));
+      const total = this.getTotalPage(headers, type);
 
-        this.setState({ [type]: { repos, pagination: { activePage: page, total } } });
-      });
+      const repos = data.map((repo) => ({
+        key: repo.id,
+        link: repo.html_url,
+        name: repo.name,
+      }));
+
+      this.setState({ [type]: { repos, pagination: { activePage: page, total } } });
     };
   }
 
-  handleSearch(e) {
+  async handleSearch(e) {
     const { target } = e;
     const { value } = target;
     const keyCode = e.which || e.keyCode;
@@ -72,37 +73,39 @@ class App extends Component {
 
     if (keyCode === ENTER) {
       this.setState({ isFetching: true });
-      axios
-        .get(App.getUrlGit(value))
-        .then((response) => {
-          const { data } = response;
-          this.setState({
-            userInfo: {
-              username: data.login,
-              img: data.avatar_url,
-              name: data.name,
-              url: data.url,
-              email: data.email,
-              createdAt: data.created_at,
-              updatedAt: data.updated_at,
-              repos: data.public_repos,
-              followers: data.followers,
-              following: data.following,
-            },
-          });
-        })
-        .finally(() => {
-          this.setState({ isFetching: false });
+
+      try {
+        const { data } = await axios.get(App.getUrlGit(value));
+
+        this.setState({
+          userInfo: {
+            username: data.login,
+            img: data.avatar_url,
+            name: data.name,
+            url: data.url,
+            email: data.email,
+            createdAt: data.created_at,
+            updatedAt: data.updated_at,
+            repos: data.public_repos,
+            followers: data.followers,
+            following: data.following,
+          },
         });
+      } catch (error) {
+        this.setState({ error: 'error ao conectar na API' });
+      } finally {
+        this.setState({ isFetching: false });
+      }
     }
   }
 
   render() {
     const {
-      userInfo, repos, starred, isFetching,
+      userInfo, repos, starred, isFetching, error,
     } = this.state;
     return (
       <AppContent
+        error={error}
         userInfo={userInfo}
         repos={repos}
         starred={starred}
