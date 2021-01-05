@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@kadira/storybook": "^2.35.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "babel-runtime": "6.22.0",
     "prop-types": "^15.7.2",
     "react": "^15.5.4",
